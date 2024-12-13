@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<script src="Javascript.js"></script>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Top 10 Quiz</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<script src="{{ url_for('static', filename='script.js') }}" defer></script>
+	</head>
+<body>
+    <div class="center">
+        <h1>Home</h1>
+    </div>
+
+	<section class="fullWidth">
+		<nav>
+			<ul>
+				<div class="thirdWidth">
+					<li><a href="http://127.0.0.1:5000/">Home</a></li>
+				</div>
+				<div class="thirdWidth">
+					<li><a href="http://127.0.0.1:5000/accessibility">Accessibility</a></li>
+				</div>	
+				<div class="thirdWidth dropdown">
+					<li><a href="javascript:void(0)" class="dropbtn">Quizzes</a>
+						<div class="dropdown-content">
+							<a href="http://127.0.0.1:5000/top10">Top 10</a>
+							<a href="http://127.0.0.1:5000/lineups">Lineups</a>
+							<a href="http://127.0.0.1:5000/multiplayer">Multiplayer</a>
+						</div>
+					</li>
+				</div>
+			</ul>
+		</nav>
+	</section>
+
+    <section class="fullWidth">
+        <p>Welcome to my website, on this website you are able to choose from 3 different quiz games and play them by hovering over the quizzes dropdown menu and then selecting which one you wish to play. Each is a multiple-choice quiz with the questions having 4 possible answers.</p>
+    </section>
+
+    <section class="fullWidth">
+        <footer>
+            <p> Finlay Gardiner 40596886</p>
+        </footer>
+    </section>
+</body>
+</html>

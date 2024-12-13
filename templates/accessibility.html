@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<script src="Javascript.js"></script>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Top 10 Quiz</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<script src="{{ url_for('static', filename='script.js') }}" defer></script>
+	</head>
+	<body>
+		<div class="center">
+			<h1>Accessibility</h1>
+		</div>
+		
+	<section class="fullWidth">
+		<nav>
+			<ul>
+				<div class="thirdWidth">
+					<li><a href="http://127.0.0.1:5000/">Home</a></li>
+				</div>
+				<div class="thirdWidth">
+					<li><a href="http://127.0.0.1:5000/accessibility">Accessibility</a></li>
+				</div>	
+				<div class="thirdWidth dropdown">
+					<li><a href="javascript:void(0)" class="dropbtn">Quizzes</a>
+						<div class="dropdown-content">
+							<a href="http://127.0.0.1:5000/top10">Top 10</a>
+							<a href="http://127.0.0.1:5000/lineups">Lineups</a>
+							<a href="http://127.0.0.1:5000/multiplayer">Multiplayer</a>
+						</div>
+					</li>
+				</div>
+			</ul>
+		</nav>
+	</section>
+	<script>
+		//from javascript file
+		function changeFontSize(size) {
+			let sizeValue;
+			switch (size) {
+				case 'small':
+					sizeValue = '12px';
+					break;
+				case 'medium':
+					sizeValue = '16px';
+					break;
+				case 'large':
+					sizeValue = '20px';
+					break;
+				default:
+					sizeValue = '16px';
+			}
+			document.body.style.fontSize = sizeValue;
+			localStorage.setItem('fontSize', sizeValue);
+		}
+
+		function loadFontSizePreference() {
+			const savedFontSize = localStorage.getItem('fontSize');
+			if (savedFontSize) {
+				document.body.style.fontSize = savedFontSize;
+			}
+		}
+
+		window.onload = loadFontSizePreference;
+	</script>
+	<section class="fullWidth">
+        <nav>
+            <ul>
+                <div class="halfWidth dropdown">
+                    <li><a href="javascript:void(0)" class="dropbtn">Font size</a>
+                        <div class="dropdown-content">
+                            <button onclick="changeFontSize('small')">Small</button>
+                            <button onclick="changeFontSize('medium')">Medium</button>
+                            <button onclick="changeFontSize('large')">Large</button>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+        </nav>
+    </section>
+		
+		<section class="fullWidth">
+			<footer>
+				<p> Finlay Gardiner 40596886</p>
+			</footer>
+		</section>
+	</body>
+</html>

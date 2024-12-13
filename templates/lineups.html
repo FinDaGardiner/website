@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<script src="Javascript.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lineups Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="center">
+        <h1>Lineups</h1>
+    </div>
+
+    <section class="fullWidth">
+        <nav>
+            <ul>
+                <div class="thirdWidth">
+                    <li><a href="http://127.0.0.1:5000/">Home</a></li>
+                </div>
+                <div class="thirdWidth">
+                    <li><a href="http://127.0.0.1:5000/accessibility">Accessibility</a></li>
+                </div>
+                <div class="thirdWidth dropdown">
+                    <li>
+                        <a href="javascript:void(0)" class="dropbtn">Quizzes</a>
+                        <div class="dropdown-content">
+                            <a href="http://127.0.0.1:5000/top10">Top 10</a>
+                            <a href="http://127.0.0.1:5000/lineups">Lineups</a>
+                            <a href="http://127.0.0.1:5000/multiplayer">Multiplayer</a>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+        </nav>
+    </section>
+
+    <section class="fullWidth">
+        <div class="center">
+            <p>{{ question }}</p>
+            <div id="formation">
+                <div class="row">
+                    <div id="GK">GK: ????</div>
+                </div>
+                <div class="row">
+                    <div class="position" id="RB">RB: ????</div>
+                    <div class="position" id="CB1">CB: ????</div>
+                    <div class="position" id="CB2">CB: ????</div>
+                    <div class="position" id="LB">LB: ????</div>
+                </div>
+                <div class="row">
+                    <div class="position" id="CM1">CM: ????</div>
+                    <div class="position" id="CM2">CM: ????</div>
+                    <div class="position" id="CAM">CAM: ????</div>
+                </div>
+                <div class="row">
+                    <div class="position" id="RW">RW: ????</div>
+                    <div class="position" id="ST">ST: ????</div>
+                    <div class="position" id="LW">LW: ????</div>
+                </div>
+            </div>
+
+            <form id="lineups-form" method="POST" action="/lineups">
+                <input type="text" name="answer" placeholder="Enter your answer">
+                <button type="submit">Submit</button>
+            </form>
+
+            <div id="result"></div>
+        </div>
+
+        <script>
+            document.getElementById('lineups-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const form = e.target;
+                const formData = new FormData(form);
+
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.index !== undefined) {
+                    const positionMap = ["GK", "RB", "CB1", "CB2", "LB", "CM1", "CM2", "CAM", "RW", "ST", "LW"];
+                    const positionId = positionMap[data.index];
+                    document.getElementById(positionId).textContent = `${positionId.split(":")[0]}: ${data.player}`;
+                }
+
+                document.getElementById('result').textContent = data.result;
+            });
+        </script>
+    </section>
+
+    <section class="fullWidth">
+        <footer>
+            <p>Finlay Gardiner 40596886</p>
+        </footer>
+    </section>
+</body>
+</html>
+

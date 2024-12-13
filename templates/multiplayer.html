@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<script src="Javascript.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="center">
+        <h1>Multiplayer Premier League Game</h1>
+    </div>
+
+    <section class="fullWidth">
+        <nav>
+            <ul>
+                <div class="thirdWidth">
+                    <li><a href="/">Home</a></li>
+                </div>
+                <div class="thirdWidth">
+                    <li><a href="/accessibility">Accessibility</a></li>
+                </div>
+                <div class="thirdWidth dropdown">
+                    <li>
+                        <a href="javascript:void(0)" class="dropbtn">Quizzes</a>
+                        <div class="dropdown-content">
+                            <a href="/top10">Top 10</a>
+                            <a href="/lineups">Lineups</a>
+                            <a href="/multiplayer">Multiplayer</a>
+                        </div>
+                    </li>
+                </div>
+            </ul>
+        </nav>
+    </section>
+
+    <section class="fullWidth">
+        <div class="center">
+            <p>Take turns guessing Premier League players!</p>
+
+            <form id="multiplayer-form" method="POST" action="/multiplayer">
+                <input type="text" name="player" placeholder="Enter a Premier League player" required>
+                <button type="submit">Submit</button>
+            </form>
+
+            <div id="result"></div>
+        </div>
+
+        <div class="side">
+            <h3>Guessed Players:</h3>
+            <ul id="guessed-list"></ul>
+        </div>
+
+        <script>
+            document.getElementById('multiplayer-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const form = e.target;
+                const formData = new FormData(form);
+
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                const guessedList = document.getElementById('guessed-list');
+                guessedList.innerHTML = '';
+                data.guessed_players.forEach(player => {
+                    const li = document.createElement('li');
+                    li.textContent = player;
+                    guessedList.appendChild(li);
+                });
+
+                document.getElementById('result').textContent = data.result;
+
+                form.reset();
+            });
+        </script>
+    </section>
+
+    <section class="fullWidth">
+        <footer>
+            <p>Finlay Gardiner 40596886</p>
+        </footer>
+    </section>
+</body>
+</html>
+

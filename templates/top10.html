@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<script src="Javascript.js"></script>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Top 10 Quiz</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	</head>
+	<body>
+		<div class="center">
+			<h1>Top 10 Quiz</h1>
+		</div>
+		
+		<section class="fullWidth">
+			<nav>
+				<ul>
+					<div class="thirdWidth">
+						<li><a href="http://127.0.0.1:5000/">Home</a></li>
+					</div>
+					<div class="thirdWidth">
+						<li><a href="http://127.0.0.1:5000/accessibility">Accessibility</a></li>
+					</div>	
+					<div class="thirdWidth dropdown">
+						<li><a href="javascript:void(0)" class="dropbtn">Quizzes</a>
+							<div class="dropdown-content">
+								<a href="http://127.0.0.1:5000/top10">Top 10</a>
+								<a href="http://127.0.0.1:5000/lineups">Lineups</a>
+								<a href="http://127.0.0.1:5000/multiplayer">Multiplayer</a>
+							</div>
+						</li>
+					</div>
+				</ul>
+			</nav>
+		</section>
+		
+		<section class="fullWidth">
+			<div class="center">
+				<p>{{ question }}</p>
+				<ul id="answer-list">
+					{% for i in range(1, 11) %}
+					<li id="position-{{ i }}">{{ i }}. ????</li>
+					{% endfor %}
+				</ul>
+				<form id="top10-form" method="POST" action="/top10">
+					<input type="text" name="answer" placeholder="Enter your answer">
+					<button type="submit">Submit</button>
+				</form>
+				<div id="result"></div>
+			</div>
+
+			<script>
+				document.getElementById('top10-form').addEventListener('submit', async (e) => {
+					e.preventDefault();
+					const form = e.target;
+					const formData = new FormData(form);
+
+					const response = await fetch(form.action, {
+						method: 'POST',
+						body: formData
+					});
+					const data = await response.json();
+
+					if (data.index !== undefined) {
+						document.getElementById(`position-${data.index + 1}`).textContent = `${data.index + 1}. ${data.player}`;
+					}
+					document.getElementById('result').textContent = data.result;
+				});
+			</script>
+		</section>
+		<section class="fullWidth">
+			<footer>
+				<p> Finlay Gardiner 40596886</p>
+			</footer>
+		</section>
+	</body>
+</html>
